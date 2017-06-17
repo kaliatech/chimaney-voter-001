@@ -5,20 +5,25 @@
     <div v-if="authInitialized">
       <header>
         <main-toolbar v-on:showSideNavbar="showSideNav = !showSideNav"></main-toolbar>
+<!--
+        <v-breadcrumbs divider="/">
+          &lt;!&ndash;<v-breadcrumbs-item&ndash;&gt;
+            &lt;!&ndash;v-for="item in items" :key="item"&ndash;&gt;
+            &lt;!&ndash;:disabled="item.disabled">&ndash;&gt;
+            &lt;!&ndash;{{ item.text }}&ndash;&gt;
+          &lt;!&ndash;</v-breadcrumbs-item>&ndash;&gt;
+          <v-breadcrumbs-item>Session - KlEKyNk2g9X7yR08eFo</v-breadcrumbs-item>
+          <v-breadcrumbs-item>Topic - As a user, I want this to... </v-breadcrumbs-item>
+        </v-breadcrumbs>
+-->
+
       </header>
 
       <main-sidebar v-model="showSideNav"></main-sidebar>
 
       <main>
 
-        <v-container>
-          <!--          <v-breadcrumbs divider="/">
-                      <v-breadcrumbs-item
-                        v-for="item in items" :key="item"
-                        :disabled="item.disabled">
-                        {{ item.text }}
-                      </v-breadcrumbs-item>
-                    </v-breadcrumbs>-->
+        <v-container fluid>
 
           <router-view></router-view>
 
