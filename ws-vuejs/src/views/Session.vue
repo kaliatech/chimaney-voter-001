@@ -12,9 +12,9 @@
       <v-card-text>
 
 
-        <h5>
-          As a something, I want this to do that, so that you can be them.
-        </h5>
+        <h6>
+          As a user, I want this to do that, so that I can be happy.
+        </h6>
 
 
       </v-card-text>
@@ -24,7 +24,7 @@
     </v-card>
 
     <v-card style="margin-bottom:1em">
-      <v-card-row class="lighten-3">
+      <v-card-row>
         <v-card-title class="white--text">
           Voters
           <v-spacer></v-spacer>
@@ -39,7 +39,7 @@
             <v-flex xs2>
               Josh
             </v-flex>
-            <v-flex xs10>
+            <v-flex xs2>
 
               <v-select
                 v-bind:items="voteOptions"
@@ -48,9 +48,6 @@
                 class="input-group--focused"
                 item-value="text"
               ></v-select>
-
-            </v-flex>
-
 
             </v-flex>
 
@@ -62,22 +59,32 @@
         <div class="voter">
           <v-layout row>
             <v-flex xs2>
-              Andreas Svensson
+              Bob
             </v-flex>
             <v-flex xs2>
 
-              <v-select
-                v-bind:items="voteOptions"
-                v-model="selectedVote"
-                label="Select"
-                class="input-group--focused"
-                item-value="text"
-              ></v-select>
-
+              <div>
+                {...}
+              </div>
             </v-flex>
 
 
+          </v-layout>
+        </div>
+
+
+        <div class="voter">
+          <v-layout row>
+            <v-flex xs2>
+              Jim
             </v-flex>
+            <v-flex xs2>
+
+              <div>
+                {...}
+              </div>
+            </v-flex>
+
 
           </v-layout>
         </div>
@@ -85,7 +92,6 @@
 
       </v-card-text>
 
-      </v-card-row>
     </v-card>
 
   </form>
