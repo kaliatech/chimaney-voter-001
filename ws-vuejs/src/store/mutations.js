@@ -10,6 +10,7 @@ if (navigator.userAgent.indexOf('PhantomJS') > -1) {
 
 export const mutations = {
   [types.AUTH_CHANGE] (state, fbUser) {
+    console.log('AUTH_CHANGE')
     let user = null
     if (fbUser) {
       user = new User()

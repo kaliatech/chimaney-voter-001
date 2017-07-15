@@ -51,5 +51,37 @@ export const actions = {
           resolve()
         })
     })
+  }),
+  joinSession: firebaseAction((ctx, sessionKey) => {
+    return new Promise((resolve, reject) => {
+      // Check if session is in store already
+      let sessionRef = ctx.state['session_' + sessionKey]
+      if (!sessionRef) {
+        console.log('Acquiring session ref')
+        // ctx.dispatch('setupSessionRef', sessionKey).then(() => {
+        //   sessionRef = ctx.state['session_' + sessionKey]
+        //   firebaseSvrc.db.ref('/users/' + ctx.state.userRef.uid + '/prevUserSessionKeys/' + sessionRef.key)
+        //     .set(true)
+        //     .then(() => {
+        //       resolve()
+        //     })
+        // })
+        sessionRef = firebaseSvrc.db.ref('/sessions/' + sessionKey)
+        ctx.dispatch('createSession', sessionRef)
+      }
+      else {
+        // TODO: factor this out in to something reuseable
+
+        // This session is now the current session
+        ctx.commit(types.SET_CURRENT_SESSION, sessionRef.key)
+
+        // Check first if already in user's previous session?
+        firebaseSvrc.db.ref('/users/' + ctx.state.userRef.uid + '/prevUserSessionKeys/' + sessionRef.key)
+          .set(true)
+          .then(() => {
+            resolve()
+          })
+      }
+    })
   })
 }

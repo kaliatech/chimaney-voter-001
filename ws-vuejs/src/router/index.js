@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import * as views from '@/views/barrel'
-import store from '../store'
+// import store from '../store'
 
 Vue.use(Router)
 
@@ -32,14 +32,15 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  // console.log('to', to)
-  // console.log('from', from)
+  console.log('router.from', from.path)
+  console.log('router.to', to.path)
   // console.log('next', next)
-  if (to.path !== '/' && !store.state.loggedInUser) {
-    next('/')
-  } else {
-    next()
-  }
+  // if (to.path !== '/' && !store.state.loggedInUser) {
+  //   next('/')
+  // } else {
+  //   next()
+  // }
+  next()
 })
 
 export default router

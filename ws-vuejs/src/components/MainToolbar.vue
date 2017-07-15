@@ -80,7 +80,8 @@
       loggedInUser () {
         if (this.loggedInUser != null) {
           this.snackbarMessage = `Signed in as ${this.loggedInUser.displayName}`
-        } else {
+        }
+        else {
           this.snackbarMessage = 'Signed out'
         }
         if (this.snackbarMessage !== this.snackbarMessagePrev) {

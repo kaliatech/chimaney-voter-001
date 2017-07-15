@@ -17,28 +17,36 @@ export class AppService {
   onUserLogin (state) {
     let loggedInUser = this.$store.state.loggedInUser
 
-    let userRef = firebaseSrvc.getUserRef(loggedInUser.uid)
-    userRef.update(this.$store.state.loggedInUser).then(() => {
-      if (!loggedInUser.altDisplayName) {
-        userRef.child('displayNameAlt').set(loggedInUser.displayName + '-alt')
-      }
-      this.$store.dispatch('setUserRef', userRef).then(() => {
-        // console.log('userRef', state.userRef)
-        // console.log('userRef.displayName', this.$store.state.userRef.displayName)
-        // userRef.once('value').then((snapshot) => {
-        //   console.log('snapshot', snapshot.val())
-        // })
-        let prevSessionKeys = this.$store.state.userRef.prevUserSessionKeys
-        for (let sessionKey in prevSessionKeys) {
-          this.$store.commit(types.CREATE_SESSION_REF_PLACEHOLDER, sessionKey)
-          // this.$store.bindFirebaseRef('session_' + sessionKey, ref)
-          // let ref = firebaseSrvc.rootRef.child('sessions/' + sessionKey).ref
-          this.$store.dispatch('setupSessionRef', sessionKey)
+    return new Promise((resolve, reject) => {
+      let userRef = firebaseSrvc.getUserRef(loggedInUser.uid)
+      userRef.update(this.$store.state.loggedInUser).then(() => {
+        if (!loggedInUser.altDisplayName) {
+          userRef.child('displayNameAlt').set(loggedInUser.displayName + '-alt')
         }
+        this.$store.dispatch('setUserRef', userRef).then(() => {
+          // console.log('userRef', state.userRef)
+          // console.log('userRef.displayName', this.$store.state.userRef.displayName)
+          // userRef.once('value').then((snapshot) => {
+          //   console.log('snapshot', snapshot.val())
+          // })
+          let prevSessionKeys = this.$store.state.userRef.prevUserSessionKeys
+          let promises = []
+          for (let sessionKey in prevSessionKeys) {
+            this.$store.commit(types.CREATE_SESSION_REF_PLACEHOLDER, sessionKey)
+            // this.$store.bindFirebaseRef('session_' + sessionKey, ref)
+            // let ref = firebaseSrvc.rootRef.child('sessions/' + sessionKey).ref
+            // console.log('setupSessionRef')
+            promises.push(this.$store.dispatch('setupSessionRef', sessionKey))
+          }
+          Promise.all(promises).then(values => {
+            resolve()
+          }).catch(reason => {
+            reject(reason)
+          })
+        })
       })
     })
     // if (userRef.val)
-
     // let userSessionsRef = this.db.ref('/user_sessions/' + uid).orderByKey().limitToLast(20)
     // this.$store.dispatch('setUserToSessionsRef', userRef)
   }

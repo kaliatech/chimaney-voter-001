@@ -84,7 +84,6 @@
         this.$emit('input', this.isActive)
       },
       value () {
-        console.log('here', this.value)
         this.isActive = this.value
       }
     }

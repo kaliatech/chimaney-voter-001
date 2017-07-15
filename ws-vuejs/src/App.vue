@@ -5,17 +5,17 @@
     <div v-if="authInitialized">
       <header>
         <main-toolbar v-on:showSideNavbar="showSideNav = !showSideNav"></main-toolbar>
-<!--
-        <v-breadcrumbs divider="/">
-          &lt;!&ndash;<v-breadcrumbs-item&ndash;&gt;
-            &lt;!&ndash;v-for="item in items" :key="item"&ndash;&gt;
-            &lt;!&ndash;:disabled="item.disabled">&ndash;&gt;
-            &lt;!&ndash;{{ item.text }}&ndash;&gt;
-          &lt;!&ndash;</v-breadcrumbs-item>&ndash;&gt;
-          <v-breadcrumbs-item>Session - KlEKyNk2g9X7yR08eFo</v-breadcrumbs-item>
-          <v-breadcrumbs-item>Topic - As a user, I want this to... </v-breadcrumbs-item>
-        </v-breadcrumbs>
--->
+        <!--
+                <v-breadcrumbs divider="/">
+                  &lt;!&ndash;<v-breadcrumbs-item&ndash;&gt;
+                    &lt;!&ndash;v-for="item in items" :key="item"&ndash;&gt;
+                    &lt;!&ndash;:disabled="item.disabled">&ndash;&gt;
+                    &lt;!&ndash;{{ item.text }}&ndash;&gt;
+                  &lt;!&ndash;</v-breadcrumbs-item>&ndash;&gt;
+                  <v-breadcrumbs-item>Session - KlEKyNk2g9X7yR08eFo</v-breadcrumbs-item>
+                  <v-breadcrumbs-item>Topic - As a user, I want this to... </v-breadcrumbs-item>
+                </v-breadcrumbs>
+        -->
 
       </header>
 
@@ -42,10 +42,6 @@
 </template>
 
 <script>
-  import appSrvc from './services/AppService'
-  import firebaseSrvc from './services/FirebaseService'
-  import sessionSrvc from './services/SessionService'
-
   import MainToolbar from './components/MainToolbar.vue'
   import MainSideNavbar from './components/MainSidebar.vue'
   import MainFooter from './components/MainFooter.vue'
@@ -74,15 +70,13 @@
       }
     },
     mounted: function () {
-      appSrvc.init(this.$store)
-      firebaseSrvc.init(this.$store)
-      sessionSrvc.init(this.$store)
+//      if (this.$store.state.loggedInUser != null) {
+//        console.log('loggedInUser', this.$store.state.loggedInUser)
+//        appSrvc.onUserLogin(this.$store.state)
+//      }
     },
     watch: {
       loggedInUser () {
-        if (this.$store.state.loggedInUser != null) {
-          appSrvc.onUserLogin(this.$store.state)
-        }
       }
     }
   }

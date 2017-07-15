@@ -161,6 +161,8 @@
 
   import PreviousSessionsPanel from '@/components/PreviousSessionsPanel'
 
+  import SessionService from '@/services/SessionService'
+
   export default {
     name: 'Session',
     components: {'previous-sessions-panel': PreviousSessionsPanel},
@@ -175,24 +177,35 @@
     },
     created: function () {
       console.log('Session:' + this.sessionId)
+      this.joinSession()
     },
     computed: {
       ...mapState([
         'loggedInUser' // store.state.topic
       ])
     },
-    methods: {},
+    methods: {
+      joinSession: function () {
+        console.log('joinSession')
+        SessionService.joinExistingSession(this.sessionId).then(() => {
+          console.log('Existing session joined')
+        }).catch(reason => {
+          console.log('Error joining existing session. Reason:', reason)
+        })
+      }
+    },
     watch: {
-      $route: function (to, from) {
-//        console.log('to', to)
-//        console.log('from', from)
-        this.debugMsg = 'route to:' + to.params.sessionId + ', from:' + from.params.sessionId
+      '$route': function (to, from) {
+        console.log('route watch')
+        // this.debugMsg = 'route to:' + to.params.sessionId + ', from:' + from.params.sessionId
         this.sessionId = to.params.sessionId
+        this.joinSession()
       },
-      sessionId: function (to, from) {
+      sessionId: function () {
         if (this.sessionId === 'new') {
           console.log('Watcher: New session')
-        } else {
+        }
+        else {
           console.log('Watcher: Existing session:' + this.sessionId)
         }
       }

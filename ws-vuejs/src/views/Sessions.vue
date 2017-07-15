@@ -10,20 +10,20 @@
           </v-card-title>
         </v-card-row>
         <v-card-text>
-          <v-card-row
+          <v-card-row>
 
-          <!--<v-col xs1>-->
-          <!--<v-icon class="mr-5">card_membership</v-icon>-->
-          <!--</v-col>-->
-          <!--<v-col xs4>-->
-          <!--<v-subheader>Existing Session ID</v-subheader>-->
-          <!--</v-col>-->
+            <!--<v-col xs1>-->
+            <!--<v-icon class="mr-5">card_membership</v-icon>-->
+            <!--</v-col>-->
+            <!--<v-col xs4>-->
+            <!--<v-subheader>Existing Session ID</v-subheader>-->
+            <!--</v-col>-->
 
-          <v-text-field name="existingSessionId" label="session ID" prepend-icon="card_membership"
-                        :autofocus="true"></v-text-field>
-          <div style="margin-left:56px">
-            <v-btn primary>Join</v-btn>
-          </div>
+            <v-text-field name="existingSessionId" label="session ID" prepend-icon="card_membership"
+                          :autofocus="true" v-model="joinSessionId"></v-text-field>
+            <div style="margin-left:56px">
+              <v-btn v-on:click.native="joinSession" primary>Join2</v-btn>
+            </div>
 
 
           </v-card-row>
@@ -53,12 +53,16 @@
 
   import PreviousSessionsPanel from '@/components/PreviousSessionsPanel'
 
+  // import sessionService from '@/services/SessionService'
+
   export default {
     name: 'Sessions',
     components: {'previous-sessions-panel': PreviousSessionsPanel},
     mixins: [globalFiltersMixin],
     data () {
-      return {}
+      return {
+        joinSessionId: 'test'
+      }
     },
     computed: {
       prevUserSessions () {
@@ -69,7 +73,13 @@
         'userRef'
       ])
     },
-    methods: {}
+    methods: {
+      joinSession: function (evt) {
+        // sessionService.joinExistingSession(this.joinSessionId).then(() => {
+        this.$router.push({path: 'session/' + this.joinSessionId})
+        // })
+      }
+    }
   }
 </script>
 <style lang="stylus">

@@ -120,8 +120,10 @@ export class FirebaseService {
 
         this.$store.commit(types.AUTH_INITIALIZED, true)
         this.$store.commit(types.AUTH_MODAL_ACTIVE, false)
+        this.ee.emitEvent('authStateChange')
       }.bind(this))
-    } else {
+    }
+    else {
       // User is signed out.
       console.log('signed out')
       // document.getElementById('sign-in-status').textContent = 'Signed out'
@@ -129,8 +131,9 @@ export class FirebaseService {
       // document.getElementById('account-details').textContent = 'null'
       this.$store.commit(types.AUTH_CHANGE, user)
       this.$store.commit(types.AUTH_INITIALIZED, true)
+      this.ee.emitEvent('authStateChange')
     }
-    this.ee.emitEvent('authStateChange')
+
     return false
   }
 

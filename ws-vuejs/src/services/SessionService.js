@@ -1,4 +1,4 @@
-import firebaseSvc from './FirebaseService'
+import firebaseSrvc from './FirebaseService'
 
 var EventEmitter = require('wolfy87-eventemitter')
 
@@ -20,9 +20,9 @@ export class SessionService {
       session.topic = 'New topic2...'
       session.createdDateTm = new Date().getTime() // todo: add /.info/serverTimeOffset?
 
-      let sessionsRef = firebaseSvc.db.ref('/sessions')
+      let sessionsRef = firebaseSrvc.db.ref('/sessions')
       sessionsRef.push(session).then((ref) => {
-        console.log('new key:', ref.key)
+        console.log('New session key:', ref.key)
         this.$store.dispatch('createSession', ref).then(() => {
           resolve(ref.key)
         })
@@ -32,6 +32,27 @@ export class SessionService {
     // if (userRef.val)
     // let userSessionsRef = this.db.ref('/user_sessions/' + uid).orderByKey().limitToLast(20)
     // this.$store.dispatch('setUserToSessionsRef', userRef)
+  }
+
+  joinExistingSession (key) {
+    return new Promise((resolve, reject) => {
+      this.$store.dispatch('joinSession', key).then((ref) => {
+        resolve(ref)
+      })
+    })
+  }
+
+  deleteSession (key) {
+    console.log('delete sessionId', key)
+
+    firebaseSrvc.db.ref('/users/' + this.$store.state.userRef.uid + '/prevUserSessionKeys' + key).remove()
+
+    // TODO: Delete, or only remove from prevUserSessionKeys?
+
+    let sessionRef = firebaseSrvc.db.ref('/sessions/' + key)
+    sessionRef.remove()
+
+    // TODO: need to delete/remove from the vuex store
   }
 }
 

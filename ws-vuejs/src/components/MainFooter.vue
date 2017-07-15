@@ -1,5 +1,5 @@
 <template>
-  <v-footer light fixed>
+  <v-footer light fluid>
     <v-container style="display: flex">
       <div class="footer-left">
         &copy; 2017 Joshua Sanderson
